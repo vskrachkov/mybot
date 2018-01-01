@@ -1,8 +1,8 @@
 from telegram import ext
 
-__all__ = ['T', ]
+__all__ = ['Bot', ]
 
-class T:
+class Bot:
     """Class helper that hold a lot of helpers that must simplify
     development of the Telegram bot.
 

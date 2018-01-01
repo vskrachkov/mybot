@@ -1,3 +1,3 @@
-from .core import T
+from .core import Bot
 
-__all__ = ['T', ]
+__all__ = ['Bot', ]
