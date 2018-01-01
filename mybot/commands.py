@@ -1,9 +1,10 @@
 from telegram import ParseMode
 
+from statappclient.client import push_weight
+
 from utils.parsers import pars_args
 from utils.wrappers import UpdateWrapper
 
-from .utils import push_weight
 from .bot import bot
 
 
