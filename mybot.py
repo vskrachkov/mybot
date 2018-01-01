@@ -56,17 +56,17 @@ class BaseArgsParser:
         ...
         >>> # create template list for testing
         >>> args = [1, 3, 'some text']
-        >>>
+
         >>> # pass args to the out args parser
         >>> my_args_parser = MyArgsParser(args)
-        >>>
+
         >>> # and that we can take parsed arguments
         >>> # by the names that we provided earlie
         >>> my_args_parser.first # prints: 1
         >>> my_args_parser.second # prints: 3
         >>> my_args_parser.third # prints: 'some text'
         >>>
-        >>> # if you want validate take arguments
+        >>> # if you want to validate taken arguments
         >>> # than define 'args' as the dictionary
         >>> # for example:
         >>> class MyArgsParser2(BaseArgsParser):
@@ -86,7 +86,7 @@ class BaseArgsParser:
         >>> # validator is just a function that takes an value as argument
         >>> # and returns validated value
         >>> def validate(val):
-        ...     # perform some validation
+        ...     # perform validation
         ...     return val
         >>> my_args_parser.help # returns help text for arguments
 
@@ -137,16 +137,15 @@ class BaseArgsParser:
                 if isinstance(val, str):
                     # list arguments names and expected types
                     args_list += tmp.format(name=name, description=val)
-                    # args_list += f'`{name}`--> (type: {val});\n'
 
                 elif isinstance(val, list):
                     # list arguments names and validators names
                     # todo/ i need to come up with something better
-                    # todo/ than just validators list
+                    # todo/ than just show validators list as description
                     args_list += tmp.format(name=name, description=val)
 
                 elif isinstance(val, dict):
-                    # try cast to get provided help text
+                    # get provided help text
                     if val.get('help'):
                         args_list += tmp.format(
                             name=name, description=val.get('help'))
@@ -158,13 +157,13 @@ class BaseArgsParser:
         return f'This command takes the arguments: \n\n{args_list}'
 
     def _cast(self, caster, argname):
-        # cast value to specified type
+        # cast value using specified caster
         self._args_map[argname] = cast_to(
             caster, self._args_map.get(argname)
         )
 
     def _run_validators(self, validators, val):
-        # runs each validator for val and save validated
+        # runs validators for val and save validated
         # value to the args map
         if not validators:
             return
@@ -192,8 +191,6 @@ class BaseArgsParser:
                 if isinstance(val, str):
                     # cast value to specified type
                     self._cast(val, self._args_map.get(name))
-                    # self._args_map[name] = cast_to(
-                    #     val, self._args_map.get(name))
 
                 elif isinstance(val, list):
                     # perform validation
