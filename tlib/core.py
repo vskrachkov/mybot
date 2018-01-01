@@ -23,38 +23,41 @@ class T:
         """
         raise NotImplemented
 
-    def command(self, command_name):
+    def command(self, command_name, *args, **kwargs):
         """Decorator that wraps handler for `command_name`.
 
         :param command_name: name of the command that handler will process
         """
         def wrapper(handler):
             assert callable(handler)
-            command_handler = ext.CommandHandler(command_name, handler)
+            command_handler = ext.CommandHandler(
+                command_name, handler, *args, **kwargs)
             self.ds.add_handler(command_handler)
             return command_handler
 
         return wrapper
 
-    def message(self, message_filter):
+    def message(self, message_filter, *args, **kwargs):
         """Decorator that wraps handler for `message_filter`.
 
         :param message_filter: one of the possible filters
             from `telegram.ext.Filters` object
         """
         def wrapper(handler):
-            message_handler = ext.MessageHandler(message_filter, handler)
+            message_handler = ext.MessageHandler(
+                message_filter, handler, *args, **kwargs)
             self.u.dispatcher.add_handler(message_handler)
             return message_handler
 
         return wrapper
 
-    def inline(self, handler):
+    def inline(self, handler, *args, **kwargs):
         """Decorator that register inline query handler.
 
         :param handler: callable that process user inline query
         """
-        inline_handler = ext.InlineQueryHandler(handler)
+        inline_handler = ext.InlineQueryHandler(
+            handler, *args, **kwargs)
         self.ds.add_handler(inline_handler)
         return inline_handler
 
@@ -85,12 +88,13 @@ class T:
 
         return wrapper
 
-    def error(self, error):
-        """Decorator that wraps error handler for the `error`.
+    def error(self, handler):
+        """Decorator that wraps errors handler.
 
-        :param error: type of the error
+        :param handler: error handler
         """
-        raise NotImplemented
+        assert callable(handler), 'Error handler must be callable'
+        self.ds.add_error_handler(handler)
 
     def run(self):
         self.u.start_polling()
