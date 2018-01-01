@@ -1,1 +1,5 @@
+# bot requirements:
 python-telegram-bot
+
+# statappclient requirements
+requests

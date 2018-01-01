@@ -1,17 +1,24 @@
 from telegram import ParseMode
 
-from statappclient.client import push_weight
-
 from utils.parsers import pars_args
 from utils.wrappers import UpdateWrapper
 
-from .bot import bot
+from .bot import bot, stat
 
 
 @bot.command('w', pass_args=True)
 def weight(bot, update, args):
-    # pars taken args
+    # get info about user
+    u = UpdateWrapper(update)
+    print('Full name: ', u.get_full_name())
+    print('Text: ', u.get_msg_text())
+    print('Username: ', u.get_username())
+
+
     # a = pars_args(args, {'weight': 'int'})
+    # a = pars_args(args, ['weight'])
+
+    # pars taken args
     a = pars_args(
         args,
         {
@@ -26,23 +33,30 @@ def weight(bot, update, args):
             },
         }
     )
-    # a = pars_args(args, ['weight'])
-    push_weight(a.weight)
-    print('weight: ', a.weight, 'kg')
-
-    # get info about user
-    u = UpdateWrapper(update)
-    print('Full name: ', u.get_full_name())
-    print('Text: ', u.get_msg_text())
-    print('Username: ', u.get_username())
 
     if not a.weight:
+        # if user does not pass his weight as argument
+        # send help message to him
         bot.send_message(
             chat_id=u.chat_id,
             text=a.help,
             parse_mode=ParseMode.MARKDOWN
         )
+        return
+
+    print('weight: ', a.weight, 'kg')
+
+    err = stat.push_metric('weight', {'val': a.weight})
+    if err:
+        # send to user message with details about error
+        bot.send_message(
+            chat_id=u.chat_id,
+            text=err,
+        )
+
     else:
+        # if all is well
+        # send to user success message
         bot.send_message(
             chat_id=u.chat_id,
             text=f'Your current weight ({a.weight} kg) saved to database.',
