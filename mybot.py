@@ -17,6 +17,7 @@ def start(bot, update):
     print('message text: ', update.message.text)
     print('date: ', update.message.date)
     print('chat: ', vars(update.message.chat))
+    print('chat_id: ', vars(update.message.chat_id))
     print('photos list: ', update.message.photo)
     print('stickers: ', update.message.sticker)
     print('video: ', update.message.video)
@@ -63,6 +64,14 @@ def upper_or_lower(bot, update):
     )
 
     bot.answer_inline_query(update.inline_query.id, results)
+
+
+@t.job(interval=10, first=0, repeating=True)
+def send_hello(bot, job):
+    from pprint import pprint
+
+    print('job: ')
+    pprint(vars(job))
 
 
 if __name__ == '__main__':

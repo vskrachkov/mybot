@@ -28,11 +28,10 @@ class T:
 
         :param command_name: name of the command that handler will process
         """
-        ds = self.ds
         def wrapper(handler):
             assert callable(handler)
             command_handler = ext.CommandHandler(command_name, handler)
-            ds.add_handler(command_handler)
+            self.ds.add_handler(command_handler)
             return command_handler
 
         return wrapper
@@ -43,10 +42,9 @@ class T:
         :param message_filter: one of the possible filters
             from `telegram.ext.Filters` object
         """
-        updater = self.u
         def wrapper(handler):
             message_handler = ext.MessageHandler(message_filter, handler)
-            updater.dispatcher.add_handler(message_handler)
+            self.u.dispatcher.add_handler(message_handler)
             return message_handler
 
         return wrapper
@@ -60,13 +58,32 @@ class T:
         self.ds.add_handler(inline_handler)
         return inline_handler
 
-    def job(self, interval, first):
+    def job(self, interval=60, first=0, repeating=False, once=False):
         """Decorator for register periodic task.
 
-        :param interval: seconds interval between tasks
+        :param interval: seconds interval between tasks or
+            time to task execution if task register to run only once
         :param first: pause in seconds before first task
+        :param repeating: run task repeatedly
+        :param once: run task only once
         """
-        raise NotImplemented
+        # define default var for wrapper
+        wrapper = None
+
+        if once:
+            # register job for only once performing
+            def wrapper(handler):
+                self.jq.run_once(handler, interval)
+
+        elif repeating:
+            # register job for repeatedly performing
+            def wrapper(handler):
+                job = self.jq.run_repeating(
+                    handler, interval=interval, first=first
+                )
+                return job
+
+        return wrapper
 
     def error(self, error):
         """Decorator that wraps error handler for the `error`.
