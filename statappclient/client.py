@@ -1,6 +1,9 @@
 import requests
 
 
+__all__ = ['Client']
+
+
 class Client:
     """Client for statistic app, that provide simple interface
     for statistics app API usage.
@@ -33,7 +36,7 @@ class Client:
         :param data: dictionary with metric values
         :return: None if all fine or message with error details
         """
-        return 'Server are not available now'
+        return 'Server are not available for now'
 
     def get_metric(self, metric_name):
         """

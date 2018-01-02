@@ -1,4 +1,4 @@
-from statappclient.client import Client
+from statappclient import Client
 
 from tlib import Bot
 
