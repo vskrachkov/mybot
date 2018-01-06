@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, jsonify, session
 
 from .blueprint import metrics
 
@@ -10,4 +10,4 @@ def weight():
         pass
     else:
         # list metric values
-        return 'Weight list'
+        return jsonify({'list': {'user': session['user']}})
