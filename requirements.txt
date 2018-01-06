@@ -3,3 +3,8 @@ python-telegram-bot
 
 # statappclient requirements
 requests
+
+# statappserver requirements
+flask
+sqlalchemy
+flask-sqlalchemy

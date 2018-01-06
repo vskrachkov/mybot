@@ -79,9 +79,13 @@ def start(bot, update):
     print('stickers: ', update.message.sticker)
     print('video: ', update.message.video)
 
-    print('Full name: ',
-          f'{update.message.chat.first_name} '
-          f'{update.message.chat.last_name}')
+    print('user id: ', update.message.from_user.id)
+    print('user username: ', update.message.from_user.username)
+    print('user name: ', update.message.from_user.name)
+    print('user is_bot: ', update.message.from_user.is_bot)
+    print('user language_code: ', update.message.from_user.language_code)
+    print('user last_name: ', update.message.from_user.last_name)
+    print('user first_name: ', update.message.from_user.first_name)
 
     bot.send_message(
         chat_id=update.message.chat_id,

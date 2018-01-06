@@ -1,0 +1,1 @@
+from statappserver import app

@@ -1,3 +1,3 @@
 from .main import bot
 
-__all__ = []
+__all__ = ['bot']
