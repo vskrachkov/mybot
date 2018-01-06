@@ -1,3 +1,3 @@
 from flask import Blueprint
 
-core = Blueprint('metrics', __name__)
+core = Blueprint('core', __name__)

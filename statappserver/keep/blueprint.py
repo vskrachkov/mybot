@@ -1,3 +1,3 @@
 from flask import Blueprint
 
-keep = Blueprint('metrics', __name__)
+keep = Blueprint('keep', __name__)

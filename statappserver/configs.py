@@ -3,6 +3,7 @@ import os
 class BaseConfig:
     SECRET_KEY = os.urandom(24)
     APP_DIR = os.path.abspath(os.path.dirname(__file__))
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 class DebugConfig(BaseConfig):

@@ -8,8 +8,15 @@ def create_app(config_class):
     """
     # create a Flask application instance
     app = Flask(__name__.split('.')[0])
+
     # load configs
     app.config.from_object(config_class)
+
+    register_extensions(app)
+    register_blueprints(app)
+    register_error_handlers(app)
+    register_shell_context(app)
+    register_middleware(app)
 
     return app
 
@@ -44,8 +51,8 @@ def register_blueprints(app):
 
 def register_error_handlers(app):
     """Register error handlers."""
-    # register you handlers here
-    pass
+    with app.app_context():
+        from . import errors
 
 
 def register_shell_context(app):
@@ -57,3 +64,9 @@ def register_shell_context(app):
         return {'db': db, }
 
     app.shell_context_processor(shell_context)
+
+
+def register_middleware(app):
+    """Register request middleware."""
+    with app.app_context():
+        from . import middleware
