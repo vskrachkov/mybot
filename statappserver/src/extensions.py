@@ -1,7 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from sqlalchemy import MetaData
 
-__all__ = ['db']
+__all__ = ['db', 'migrate']
 
 convention = {
     "ix": 'i_%(column_0_label)s',
@@ -13,3 +14,4 @@ convention = {
 
 metadata = MetaData(naming_convention=convention)
 db = SQLAlchemy(metadata=metadata)
+migrate = Migrate(db=db)

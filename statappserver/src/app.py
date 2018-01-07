@@ -7,7 +7,7 @@ def create_app(config_class):
     :param config_class: class that holds app configuration values
     """
     # create a Flask application instance
-    app = Flask(__name__.split('.')[0])
+    app = Flask(__name__)
 
     # load configs
     app.config.from_object(config_class)
@@ -27,10 +27,11 @@ def register_extensions(app):
     :param app: Flask application instance
     """
     # import all extensions instances
-    from .extensions import db
+    from .extensions import db, migrate
 
     # register these extensions
     db.init_app(app)
+    migrate.init_app(app)
 
 
 def register_blueprints(app):

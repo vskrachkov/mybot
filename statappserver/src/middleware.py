@@ -6,8 +6,12 @@ from .errors import Unauthorized
 
 @current_app.before_request
 def before_request():
+    authentication_middleware()
+
+
+def authentication_middleware():
     auth = request.authorization
-    if not auth and not current_app.debug:
+    if not auth:
         raise Unauthorized()
 
     username = auth.get('username')
