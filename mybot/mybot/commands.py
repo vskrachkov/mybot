@@ -1,7 +1,6 @@
 from telegram import ParseMode
 
-from utils.parsers import pars_args
-from utils.wrappers import UpdateWrapper
+from mybot.utils import UpdateWrapper, pars_args
 
 from .bot import bot, stat
 
