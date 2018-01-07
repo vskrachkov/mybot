@@ -1,4 +1,4 @@
-from flask import current_app, jsonify
+from flask import jsonify
 
 
 class AppException(Exception):
@@ -29,8 +29,13 @@ class Unauthorized(AppException):
     code = 'unauthorized'
 
 
-@current_app.errorhandler(AppException)
-def handle_invalid_usage(error):
+class Forbidden(AppException):
+    status_code = 403
+    detail = 'Permission denied'
+    code = 'forbidden'
+
+
+def error_handler(error):
     response = jsonify(error.to_dict())
     response.status_code = error.status_code
     return response

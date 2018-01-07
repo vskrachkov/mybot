@@ -53,7 +53,8 @@ def register_blueprints(app):
 def register_error_handlers(app):
     """Register error handlers."""
     with app.app_context():
-        from . import errors
+        from src.errors import AppException, error_handler
+        app.errorhandler(AppException)(error_handler)
 
 
 def register_shell_context(app):
