@@ -1,4 +1,4 @@
-from statappserver.src import db
+from ..extensions import db
 
 
 class User(db.Model):

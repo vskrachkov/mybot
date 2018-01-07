@@ -8,7 +8,7 @@ class BaseConfig:
 
 class DebugConfig(BaseConfig):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'sqlite:////debug.db'
+    SQLALCHEMY_DATABASE_URI = 'postgresql://mybot:uberpass@localhost/mybot_db'
 
 
 class ProdConfig(BaseConfig):

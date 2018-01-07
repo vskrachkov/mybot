@@ -6,6 +6,7 @@ requests
 
 # statappserver requirements
 flask
+psycopg2
 sqlalchemy
 flask-sqlalchemy
 flask-migrate

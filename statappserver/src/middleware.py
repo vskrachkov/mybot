@@ -17,4 +17,9 @@ def authentication_middleware():
     username = auth.get('username')
     user_id = auth.get('password')
 
-    session['user'] = authenticate(username, user_id)
+    user = authenticate(username, user_id)
+
+    if not user:
+        raise Unauthorized()
+
+    session['user'] = user
