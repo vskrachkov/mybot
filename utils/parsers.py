@@ -214,6 +214,21 @@ def pars_args(args, args_names):
         >>> mapped.first # prints: 1
         >>> mapped.second # prints: 4
         >>> mapped.third # prints: 'some text'
+
+        >>> a = pars_args(
+        >>>     args,
+        >>>     {
+        >>>         'weight': {
+        >>>             'type': 'float',
+        >>>             'help': 'Pass your weight as the'
+        >>>                     'first argument for this command'
+        >>>         },
+        >>>         'age': {
+        >>>             'type': 'int',
+        >>>             'help': 'Pass your age as the second argument'
+        >>>         },
+        >>>     }
+        >>> )
     """
     __arg_parser.args = args_names
     return __arg_parser(args)
