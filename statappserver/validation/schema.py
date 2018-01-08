@@ -94,6 +94,23 @@ class Schema:
         >>>     'user': user_schema,
         >>>     'department': str
         >>> }, nested=True)
+        >>> # you can also create your own validator for performing
+        >>> # more complex type casting and validation.
+        >>> # Validator is any callable object that takes value for validation
+        >>> # and returns valid one or raise error if value are not valid
+        >>> # or something else
+        >>> # for example lets define choices validator
+        >>> def choices(*valid_choices):
+        >>>     def validate(val):
+        >>>         if val not in valid_choices:
+        >>>             raise Error()
+        >>>         return val
+        >>>     return validate
+        >>> # define schema with custom validator
+        >>> s = Schema({'colors': choices('red', 'blue', 'green')})
+        >>> # also please check validators in the validators module
+        >>> # maybe validator that you want to write already exists
+        >>> # choices validator for example already defined
     """
 
     def __init__(self, schema_declaration, error_handler=None, nested=False,
